@@ -1,13 +1,14 @@
 package ec.edu.espe.inventariohardware.service;
 
 import ec.edu.espe.inventariohardware.dto.CategoriaReporteDTO;
-import ec.edu.espe.inventariohardware.dto.InventarioReporteDTO;
 import ec.edu.espe.inventariohardware.entity.HardwareEntity;
 import ec.edu.espe.inventariohardware.repository.HardwareRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Service
 public class HardwareServiceImpl implements HardwareService {
@@ -19,14 +20,27 @@ public class HardwareServiceImpl implements HardwareService {
     }
 
     @Override
-    public InventarioReporteDTO reporteImperativo() {
+    public Map<String, Object> reporteImperativo() {
+
+        long inicio = System.currentTimeMillis();
 
         List<HardwareEntity> lista = repository.findAll();
 
         Map<String, CategoriaReporteDTO> mapa = new HashMap<>();
         Map<String, Integer> contador = new HashMap<>();
 
+        int index = 0;
+
         for (HardwareEntity hw : lista) {
+
+            if (index < 500) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            index++;
 
             String cat = hw.getCategoria().name();
 
@@ -42,7 +56,6 @@ public class HardwareServiceImpl implements HardwareService {
             CategoriaReporteDTO dto = mapa.get(cat);
 
             dto.setValorTotal(dto.getValorTotal().add(hw.getPrecio()));
-
             contador.put(cat, contador.get(cat) + 1);
 
             HardwareEntity masCaro = lista.stream()
@@ -59,22 +72,38 @@ public class HardwareServiceImpl implements HardwareService {
             dto.setPromedioPrecio(dto.getValorTotal().doubleValue() / count);
         }
 
-        InventarioReporteDTO response = new InventarioReporteDTO();
-        response.setCategorias(mapa);
+        long fin = System.currentTimeMillis();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("datos", mapa);
+        response.put("tiempoMs", fin - inicio);
 
         return response;
     }
 
     @Override
-    public InventarioReporteDTO reporteFuncional() {
+    public Map<String, Object> reporteFuncional() {
+
+        long inicio = System.currentTimeMillis();
 
         List<HardwareEntity> lista = repository.findAll();
 
+        AtomicInteger index = new AtomicInteger(0);
+
         Map<String, CategoriaReporteDTO> categorias = lista.stream()
-                .collect(java.util.stream.Collectors.groupingBy(
+                .peek(h -> {
+                    if (index.getAndIncrement() < 500) {
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                })
+                .collect(Collectors.groupingBy(
                         h -> h.getCategoria().name(),
-                        java.util.stream.Collectors.collectingAndThen(
-                                java.util.stream.Collectors.toList(),
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
                                 items -> {
 
                                     CategoriaReporteDTO dto = new CategoriaReporteDTO();
@@ -101,8 +130,11 @@ public class HardwareServiceImpl implements HardwareService {
                         )
                 ));
 
-        InventarioReporteDTO response = new InventarioReporteDTO();
-        response.setCategorias(categorias);
+        long fin = System.currentTimeMillis();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("datos", categorias);
+        response.put("tiempoMs", fin - inicio);
 
         return response;
     }

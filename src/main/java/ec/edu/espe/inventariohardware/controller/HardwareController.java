@@ -1,11 +1,12 @@
 package ec.edu.espe.inventariohardware.controller;
 
-import ec.edu.espe.inventariohardware.dto.InventarioReporteDTO;
 import ec.edu.espe.inventariohardware.service.HardwareService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
+@RequestMapping("/api")
 public class HardwareController {
 
     private final HardwareService service;
@@ -15,12 +16,12 @@ public class HardwareController {
     }
 
     @GetMapping("/reporte/imperativo")
-    public InventarioReporteDTO reporteImperativo() {
+    public Map<String, Object> imperativo() {
         return service.reporteImperativo();
     }
 
     @GetMapping("/reporte/funcional")
-    public InventarioReporteDTO reporteFuncional() {
+    public Map<String, Object> funcional() {
         return service.reporteFuncional();
     }
 }

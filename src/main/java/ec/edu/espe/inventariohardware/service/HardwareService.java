@@ -1,11 +1,8 @@
 package ec.edu.espe.inventariohardware.service;
 
-import ec.edu.espe.inventariohardware.dto.InventarioReporteDTO;
+import java.util.Map;
 
 public interface HardwareService {
-
-    InventarioReporteDTO reporteImperativo();
-
-    InventarioReporteDTO reporteFuncional();
-
+    Map<String, Object> reporteImperativo();
+    Map<String, Object> reporteFuncional();
 }

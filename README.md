@@ -1,13 +1,13 @@
 # Inventario Hardware - Spring Boot-LILIANA LESANO
 
-## 📌 Descripción
+##  Descripción
 Este proyecto gestiona el inventario de hardware usando Spring Boot Y PostgreSQL.
 
 Se procesan 10.000 registros de equipos tecnológicos para generar reportes por categoría.
 
 ---
 
-## ⚙️ Tecnologías usadas
+## Tecnologías usadas
 - Java 21
 - Spring Boot 3
 - PostgreSQL
@@ -16,7 +16,7 @@ Se procesan 10.000 registros de equipos tecnológicos para generar reportes por 
 
 ---
 
-## 🧠 Problema resuelto
+## Problema resuelto
 
 El sistema analiza 10.000 registros de hardware y debe:
 
@@ -28,21 +28,21 @@ El sistema analiza 10.000 registros de hardware y debe:
 
 ---
 
-## 🧩 Implementación
+## Implementación
 
-### 🔹 Paradigma Imperativo
+### Paradigma Imperativo
 - Uso de for, if, else
 - Acumuladores manuales
 - Control explícito del flujo
 
-### 🔹 Paradigma Funcional
+### Paradigma Funcional
 - Uso de Streams API
 - groupingBy, map, reduce
 - Código más limpio y declarativo
 
 ---
 
-## 📊 Comparación
+## Comparación
 
 | Criterio | Imperativo | Funcional |
 |----------|------------|-----------|
@@ -53,7 +53,7 @@ El sistema analiza 10.000 registros de hardware y debe:
 
 ---
 
-## 📌 Conclusión
+## Conclusión
 
 El paradigma imperativo permite control detallado del proceso, pero se necesita de la ejecuicòn de más código.
 
@@ -62,4 +62,4 @@ El paradigma funcional mejora la legibilidad y reduce la complejidad, siendo má
 ---
 
 ## 🔗 Repositorio
-https://github.com/TU-USUARIO/inventario-hardware
+https://github.com/Lilianale/inventario-hardware.git

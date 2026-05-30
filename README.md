@@ -61,5 +61,5 @@ El paradigma funcional mejora la legibilidad y reduce la complejidad, siendo má
 
 ---
 
-## 🔗 Repositorio
+## Repositorio- LILIANA LESANO
 https://github.com/Lilianale/inventario-hardware.git
